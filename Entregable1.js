@@ -1,33 +1,47 @@
 class Usuario {
+
+    mascotas = [];
+
     constructor (nombre, apellido, libros, mascotas) {
         this.nombre = nombre ;
         this.apellido = apellido ;
-        this.libros = [
-            {
-                nombre: 'Harry Potter', 
-                autor:' J. K. Rowling'
-            },
-            {
-                nombre: 'La Isla Misteriosa',
-                autor: ' Julio Verne'
-            }
-        ];
-        this.mascotas = [mascotas] ;
+        this.libros = libros;
+        this.mascotas = mascotas ;
     }
     
-    set FullName(nameSur) {
-        this.nombre.apellido = nameSur
+    //retornarMensaje () {
+    //    return `Buenas! Soy ${this.nombre} ${this.apellido}, tengo dos mascotas (${this.mascotas}) y mi libro preferido es ${this.libros.map(item => item.nombre)} de los autores ${this.libros.map(item => item.autor)}`;
+    //}
+
+    getFullName() {
+        const nombreYApellido = ((name) => name.nombre);
+        const name = nombre.map(nombreYApellido);
     }
 
+    addBook(libros) {
+        // let libro = {nombre: 'La Isla Misteriosa', autor: 'Julio Verne'}
+        this.libros.push(libros);
+    }
 
-    retornarMensaje () {
-        return `Buenas! Soy ${this.nombre} ${this.apellido}, tengo tres mascotas( ${this.mascotas}) y mis libros preferidos son ${this.libros.map(item => item.nombre)} de los autores ${this.libros.map(item => item.autor)}`;
-    } 
-
-    
-
+    addMascota(mascota) {
+        this.mascotas.push(mascota);
+    }
 }
 
-const User = new Usuario ('Gonzalo', 'Barreiro', [{nombre: 'Harry Potter', autor: 'J. K. Rowling'}, {nombre: 'La Isla Misteriosa', autor: 'Julio Verne'}], '2 gatos + 1 perro');
+
+
+const countMascotas = ['Popis', 'Spyke', 'Roma']
+
+const User = new Usuario ('Gonzalo', 'Barreiro', [{nombre: 'La Isla Misteriosa', autor: 'Julio Verne'}/* , {nombre: 'Harry Potter', autor: 'J. K. Rowling'} */], ['Popis', 'Spyke' ]);
 console.log(User);
-console.log(User.retornarMensaje())
+// console.log(User.retornarMensaje())
+console.log(User.libros);
+User.addBook({nombre: 'Harry Potter', autor: 'J. K. Rowling'})
+console.log(User.libros)
+console.log(User.mascotas);
+User.addMascota('Roma');
+console.log(User.mascotas);
+console.log(countMascotas.length);
+
+// console.log(User.getFullName())
+
