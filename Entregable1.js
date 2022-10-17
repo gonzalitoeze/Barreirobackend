@@ -1,5 +1,6 @@
 class Usuario {
 
+    libros = [];
     mascotas = [];
 
     constructor (nombre, apellido, libros, mascotas) {
@@ -8,18 +9,8 @@ class Usuario {
         this.libros = libros;
         this.mascotas = mascotas ;
     }
-    
-    //retornarMensaje () {
-    //    return `Buenas! Soy ${this.nombre} ${this.apellido}, tengo dos mascotas (${this.mascotas}) y mi libro preferido es ${this.libros.map(item => item.nombre)} de los autores ${this.libros.map(item => item.autor)}`;
-    //}
-
-    getFullName() {
-        const nombreYApellido = ((name) => name.nombre);
-        const name = nombre.map(nombreYApellido);
-    }
 
     addBook(libros) {
-        // let libro = {nombre: 'La Isla Misteriosa', autor: 'Julio Verne'}
         this.libros.push(libros);
     }
 
@@ -27,12 +18,19 @@ class Usuario {
         this.mascotas.push(mascota);
     }
 
-    getBookNames(libros) {
-        this.libros.lenght(libros)
-    }
+    // getBookNames(libros) {
+    //     this.libros.map(libros)
+    // }
+    
+    //retornarMensaje () {
+    //    return `Buenas! Soy ${this.nombre} ${this.apellido}, tengo dos mascotas (${this.mascotas}) y mi libro preferido es ${this.libros.map(item => item.nombre)} de los autores ${this.libros.map(item => item.autor)}`;
+    //}
 }
 
-
+const libros = [{nombre: 'La Isla Misteriosa', autor: 'Julio Verne'}, {nombre: 'Harry Potter', autor: 'J. K. Rowling'}]
+const getBookName = libros.map((nombre) => {
+    return nombre
+})
 
 const countMascotas = ['Popis', 'Spyke', 'Roma']
 
@@ -44,7 +42,7 @@ console.log(User.libros)
 User.addMascota('Roma');
 console.log(User.mascotas);
 console.log(countMascotas.length);
-console.log(User.getBookNames.map);
+console.log(getBookName);
 
 // console.log(User.getFullName())
 
