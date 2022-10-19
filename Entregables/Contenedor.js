@@ -3,16 +3,6 @@ const fs = require('fs');
 class Contenedor {
     constructor(file) {
         this.file = file;
-        this.producto = this.readFile();
-    }
-
-    readFile() {
-        const data = JSON.parse(fs.readFileSync('./this.file'), 'utf-8');
-        return data;
-    }
-    
-    writeData(datos) {
-        fs.writeFileSync(`./${this.file}`, JSON.stringify(datos ,null, 2))
     }
 
     async save (producto) {
@@ -141,6 +131,8 @@ metodos = async() => {
     console.log(await contenedor.save(producto3))
     console.log(await contenedor.getAll())
     console.log(await contenedor.getById(id))
+    console.log(await contenedor.deleteById(id))
+    console.log(await contenedor.deleteAll())
 }
 metodos()
 
