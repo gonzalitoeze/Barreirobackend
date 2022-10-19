@@ -3,6 +3,16 @@ const fs = require('fs');
 class Contenedor {
     constructor(file) {
         this.file = file;
+        this.producto = this.readFile();
+    }
+
+    readFile() {
+        const data = JSON.parse(fs.readFileSync('./this.file'), 'utf-8');
+        return data;
+    }
+    
+    writeData(datos) {
+        fs.writeFileSync(`./${this.file}`, JSON.stringify(datos ,null, 2))
     }
 
     async save (producto) {
@@ -11,18 +21,17 @@ class Contenedor {
             if (fs.existsSync(this.file)) {
 
                 //en el caso de que el archivo de objetos exista debemos leer el archivo
-                let info = await fs.promises.readFile(this.file, 'utf-8');
-                let result = JSON.parse(info);
-                if (result.length > 0) {
-                    let lastId = result[result.length-1].id+1 //al ultimo objeto del id le suma 1 y se lo asigna
+                let productos = await this.getAll();
+                if (productos.length > 0) {
+                    let lastId = productos[productos.length-1].id+1 //al ultimo objeto del id le suma 1 y se lo asigna
 
                     let newProducto = {
                         id: lastId,
                         ...producto
                     }
-                    result.push(newProducto);
+                    productos.push(newProducto);
                     //en este caso hay que sobreescribir el archivo pero enviándole el "result".
-                    await fs.promises.writeFile(this.file, JSON.stringify(result,null,2))
+                    await fs.promises.writeFile(this.file, JSON.stringify(productos, null, 2))
                     return lastId;
 
                 } else {
@@ -32,9 +41,9 @@ class Contenedor {
                         id: lastId,
                         ...producto
                     }
-                    result.push(newProducto);
+                    productos.push(newProducto);
                     //en este caso hay que sobreescribir el archivo pero enviándole el "result".
-                    await fs.promises.writeFile(this.file, JSON.stringify(result, null, 2))
+                    await fs.promises.writeFile(this.file, JSON.stringify(productos, null, 2))
                     return lastId;
                 }
                 
@@ -73,18 +82,39 @@ class Contenedor {
         }
     }
 
-    async getById() {
+    async getById(id) {
         try {
-            if (fs.existsSync(this.file)){
-
-            }
-        } catch(err) {
+            const data = await this.getAll()
+            let itemToFind = data.find((item) => item.id === id)
+            console.log(itemToFind ? itemToFind : null)
+            return itemToFind ? itemToFind: null
+            } catch(err) {
             console.log(err)
+        }
+    }
+
+    async deleteById(id) {
+        try {
+            const data = await this.getAll()
+            let itemToDeleteById = data.filter((item) => item.id !== id)
+            this.file(itemToDeleteById)
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async deleteAll() {
+        try {
+            const data = await this.getAll()
+            this.producto = []
+            this.writeData(this.producto)
+        } catch (err) {
+            console.log(err);
         }
     }
 }
 
-let contenedor = new Contenedor('productos.txt');
+let contenedor = new Contenedor ('productos.txt');
 
 let producto1 = {
     id: 1,
@@ -110,10 +140,11 @@ metodos = async() => {
     console.log(await contenedor.save(producto2))
     console.log(await contenedor.save(producto3))
     console.log(await contenedor.getAll())
+    console.log(await contenedor.getById(id))
 }
 metodos()
 
-//esta linea recibe a "save" y "(producto)" pregunta a "if" si existe el producto. Si no existe, lo crea.
+module.exports = Contenedor
 
 
 
