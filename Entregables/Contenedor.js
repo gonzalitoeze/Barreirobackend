@@ -87,7 +87,7 @@ class Contenedor {
         try {
             const data = await this.getAll()
             let itemToDeleteById = data.filter((item) => item.id !== id)
-            this.file(itemToDeleteById)
+            await fs.promises.writeFile(this.file, itemToDeleteById)
         } catch (err) {
             console.log(err);
         }
@@ -98,6 +98,7 @@ class Contenedor {
             const data = await this.getAll()
             this.producto = []
             this.writeData(this.producto)
+            await fs.promises.writeFile(this.file, "[]")
         } catch (err) {
             console.log(err);
         }
