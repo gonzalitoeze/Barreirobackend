@@ -1,29 +1,29 @@
-// Definición de persona
+const express = require('express');
+const moment = require('moment');
+const aplicacion = express();
 
-/* let nombre = 'Gonzalo'
-let edad = 26
-let luckynumber = '17'
-let tvshow = [{pelicula: 'Avengers'}, {serie: 'Game of Thrones & House of the Dragon'}] */
+const puerto = 8080;
+let visitas = 0;
 
+aplicacion.get('/', (peticion, respuesta) => {
+    respuesta.end('<h1 style="color:blue">Bienvenidos al servidor express</h1>')
+});
 
-let nombre = 'Pepe'
-let edad = 25
-let precio = 99.90
-let series = ['Dark', 'Mr. Robot', 'Castlevania']
-let peliculas = [{
-    nombre: 'minions',
-    anio: '2008',
-    protagonistas: ['Gru', 'Bob', 'Kevin']
-}]
+aplicacion.get('/visitas', (peticion, respuesta) => {
+    visitas ++;
+    respuesta.end(`Cantidad de visitas: ${visitas}`);
+});
 
-edad = edad + 1
+aplicacion.get('/fyh', (peticion, respuesta) => {
+    const ahora = moment(new Date());
+    const ahoraFormateado = ahora.format('DD/MM/yyyy hh:mm:ss');
+    respuesta.send({
+        fyh: ahoraFormateado
+    });
+});
 
-series.push('Breaking Bad')
-series.push(' Bad')
-peliculas.push(' Bad')
+const conexionServidor = aplicacion.listen(puerto, () => {
+    console.log(`Aplicación escuchando en el puerto ${conexionServidor.address().port}`);
+});
 
-console.log(nombre);
-console.log(edad);
-console.log(precio);
-console.log(series);
-console.log(peliculas);
+conexionServidor.on('Error', error => console.log(`Ha ocurido un error: ${error}`));
